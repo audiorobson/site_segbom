@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body { margin:0; background:#FFFFFF; color:#12100F; font-family:'Archivo',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:#C1000B; text-decoration:none; }
+  a:hover { color:#FF0000; }
+  summary::-webkit-details-marker { display:none; }
+  summary { list-style:none; cursor:pointer; }
+  details[open] > summary > span[data-plus] { transform:rotate(45deg); }
+  @keyframes segbom-marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes segbom-rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+</style>
+</helmet>
+
+<header ref="{{ headerRef }}" style="position:sticky;top:0;z-index:60;background:#FFFFFF;box-shadow:0 1px 0 rgba(18,16,15,.1);transition:box-shadow .25s ease">
+  <div style="max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:32px">
+    <a href="#inicio" style="display:flex;align-items:center;flex:0 0 auto"><img src="uploads/logo%20segbom%20atual.png" alt="Segbom Corretora de Seguros" style="height:46px;width:auto"></a>
+
+    <nav style="display:flex;align-items:center;gap:4px;flex:1 1 auto;justify-content:center;flex-wrap:wrap">
+      <a href="#inicio" style="padding:10px 14px;font-size:15px;font-weight:600;color:#12100F;border-radius:4px" style-hover="background:#F4F2F0">Início</a>
+      <a href="#sobre" style="padding:10px 14px;font-size:15px;font-weight:600;color:#12100F;border-radius:4px" style-hover="background:#F4F2F0">A Segbom</a>
+      <div onMouseEnter="{{ abrirMega }}" onMouseLeave="{{ fecharMega }}" style="position:relative">
+        <a href="#seguros" style="padding:10px 14px;font-size:15px;font-weight:600;color:#12100F;border-radius:4px;display:flex;align-items:center;gap:7px" style-hover="background:#F4F2F0">Seguros
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="3.5" stroke-linecap="round"><path d="M5 9l7 7 7-7"></path></svg>
+        </a>
+        <sc-if value="{{ megaAberto }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:12px;width:min(84vw,880px)">
+            <div style="background:#FFFFFF;box-shadow:0 20px 60px rgba(18,16,15,.18);border-top:5px solid #FF0000;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:28px;animation:segbom-rise .18s ease both">
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
+                <sc-for list="{{ produtos }}" as="p" hint-placeholder-count="6">
+                  <a href="{{ p.href }}" style="display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;padding:12px;border-radius:6px;color:#12100F;align-items:start" style-hover="background:#F4F2F0">
+                    <span style="width:38px;height:38px;display:grid;place-items:center;background:#FFF3F3;border-radius:6px">{{ p.icone }}</span>
+                    <span style="display:grid;gap:3px">
+                      <span style="font-size:15px;font-weight:700">{{ p.nome }}</span>
+                      <span style="font-size:13px;line-height:1.45;color:#8A8481">{{ p.mini }}</span>
+                    </span>
+                  </a>
+                </sc-for>
+              </div>
+              <div style="background:#12100F;color:#FFFFFF;padding:24px;display:grid;gap:14px;align-content:start">
+                <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#FF3B30">Atendimento</span>
+                <span style="font-family:'Archivo Black',sans-serif;font-size:20px;line-height:1.15;letter-spacing:-.02em">Não sabe qual seguro precisa?</span>
+                <span style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.7)">Um corretor analisa seu caso e explica as opções antes de qualquer proposta.</span>
+                <a href="#cotacao" style="background:#FF0000;color:#FFFFFF;padding:12px 16px;border-radius:4px;font-size:14px;font-weight:700;text-align:center" style-hover="background:#FFFFFF;color:#12100F">Falar com um consultor</a>
+                <a href="#seguros" style="font-size:14px;font-weight:600;color:#FFFFFF">Ver todos os seguros →</a>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <a href="#empresas" style="padding:10px 14px;font-size:15px;font-weight:600;color:#12100F;border-radius:4px" style-hover="background:#F4F2F0">Para Empresas</a>
+      <a href="#atendimento" style="padding:10px 14px;font-size:15px;font-weight:600;color:#12100F;border-radius:4px" style-hover="background:#F4F2F0">Atendimento</a>
+      <a href="#conteudos" style="padding:10px 14px;font-size:15px;font-weight:600;color:#12100F;border-radius:4px" style-hover="background:#F4F2F0">Conteúdos</a>
+      <a href="#contato" style="padding:10px 14px;font-size:15px;font-weight:600;color:#12100F;border-radius:4px" style-hover="background:#F4F2F0">Contato</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:10px;flex:0 0 auto">
+      <a href="#contato" style="display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:14px;font-weight:600;color:#12100F;border-radius:4px" style-hover="background:#F4F2F0">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0F7A4F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"></path></svg>
+        WhatsApp
+      </a>
+      <a href="#cotacao" style="background:#FF0000;color:#FFFFFF;padding:13px 22px;border-radius:4px;font-size:15px;font-weight:700;white-space:nowrap;transition:background .2s ease,transform .12s ease" style-hover="background:#C1000B" style-active="transform:translateY(1px)">Solicitar cotação</a>
+    </div>
+  </div>
+</header>
+
+<main id="inicio" style="display:grid">
+
+  <section style="background:#12100F;color:#FFFFFF;position:relative;overflow:hidden">
+    <div style="max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:minmax(0,45fr) minmax(0,55fr);gap:56px;align-items:center;min-height:min(78vh,620px)">
+      <div style="display:grid;gap:26px;padding:72px 0">
+        <span style="display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#FF3B30;font-weight:600">
+          <span style="width:26px;height:4px;background:#FF0000"></span>Corretora de seguros
+        </span>
+        <h1 style="font-family:'Archivo Black',sans-serif;font-size:clamp(38px,4.6vw,66px);line-height:.98;letter-spacing:-.035em;margin:0;text-wrap:balance">Seguro explicado antes de ser vendido.</h1>
+        <p style="margin:0;font-size:clamp(17px,1.4vw,21px);line-height:1.55;color:rgba(255,255,255,.72);max-width:40ch;text-wrap:pretty">A Segbom compara as opções do mercado, mostra o que cada cobertura faz e acompanha você da contratação ao sinistro.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#cotacao" style="background:#FF0000;color:#FFFFFF;padding:17px 28px;border-radius:4px;font-size:16px;font-weight:700;transition:background .2s ease" style-hover="background:#FFFFFF;color:#12100F">Solicitar cotação</a>
+          <a href="#seguros" style="border:2px solid rgba(255,255,255,.28);color:#FFFFFF;padding:15px 26px;border-radius:4px;font-size:16px;font-weight:700;transition:border-color .2s ease" style-hover="border-color:#FFFFFF">Conhecer as coberturas</a>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;padding-top:6px">
+          <span style="width:30px;height:4px;background:#FF0000"></span>
+          <span style="width:12px;height:4px;background:rgba(255,255,255,.25)"></span>
+          <span style="width:12px;height:4px;background:rgba(255,255,255,.25)"></span>
+          <span style="font-size:13px;color:rgba(255,255,255,.45);margin-left:10px">Atendimento humano, do primeiro contato ao sinistro</span>
+        </div>
+      </div>
+      <div style="position:relative;align-self:stretch;min-height:420px">
+        <div style="position:absolute;inset:0"><image-slot id="hero-home" shape="rect" placeholder="Foto do hero — pessoa real, luz natural, espaço negativo à esquerda"></image-slot></div>
+        <div style="position:absolute;left:-1px;top:0;bottom:0;width:120px;background:linear-gradient(90deg,#12100F,rgba(18,16,15,0));pointer-events:none"></div>
+        <div style="position:absolute;right:32px;bottom:32px;width:96px;height:96px;border-radius:50% 0 50% 50%;background:#FF0000;pointer-events:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#F4F2F0">
+    <div style="max-width:1280px;margin:0 auto;padding:26px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px">
+      <sc-for list="{{ confianca }}" as="c" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:center;padding:12px 4px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"></path></svg>
+          <span style="font-size:15px;font-weight:600;line-height:1.35">{{ c }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="seguros" style="max-width:1280px;margin:0 auto;padding:88px 32px;display:grid;gap:44px">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);gap:32px;align-items:end">
+      <div style="display:grid;gap:16px">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8A8481;font-weight:600">Nossas soluções</span>
+        <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(30px,3.2vw,44px);line-height:1.02;letter-spacing:-.03em;margin:0;max-width:24ch;text-wrap:balance">Proteção para pessoas, famílias e empresas</h2>
+      </div>
+      <p style="margin:0;font-size:17px;line-height:1.6;color:#3A3634;max-width:38ch;text-wrap:pretty">Coberturas, assistências e condições variam conforme a seguradora e o perfil analisado. Explicamos as diferenças antes de você decidir.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+      <sc-for list="{{ produtos }}" as="p" hint-placeholder-count="6">
+        <a href="{{ p.href }}" style="display:grid;gap:18px;padding:32px;background:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(18,16,15,.12);color:#12100F;align-content:start;transition:box-shadow .22s ease,transform .22s ease" style-hover="box-shadow:inset 0 0 0 2px #FF0000,0 18px 40px rgba(18,16,15,.1);transform:translateY(-3px)">
+          <span style="width:52px;height:52px;display:grid;place-items:center;background:#FFF3F3;border-radius:8px">{{ p.iconeGrande }}</span>
+          <span style="font-family:'Archivo Black',sans-serif;font-size:23px;letter-spacing:-.02em;line-height:1.1">{{ p.nome }}</span>
+          <span style="font-size:16px;line-height:1.6;color:#3A3634">{{ p.resumo }}</span>
+          <span style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#C1000B">{{ p.cta }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1000B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="sobre" style="background:#F4F2F0">
+    <div style="max-width:1280px;margin:0 auto;padding:88px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:56px;align-items:center">
+      <div style="position:relative;min-height:420px">
+        <div style="position:absolute;inset:0"><image-slot id="sobre-home" shape="rect" placeholder="Equipe Segbom atendendo — ambiente real do escritório"></image-slot></div>
+        <div style="position:absolute;left:-14px;bottom:-14px;width:88px;height:88px;border-radius:50% 0 50% 50%;background:#FF0000"></div>
+      </div>
+      <div style="display:grid;gap:24px">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8A8481;font-weight:600">A Segbom</span>
+        <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.03em;margin:0;text-wrap:balance">Corretora de gente, não de formulário</h2>
+        <p style="margin:0;font-size:18px;line-height:1.65;color:#3A3634;text-wrap:pretty">Trabalhamos com seguros em geral — auto, residencial, vida, empresarial e saúde. Nosso papel é traduzir apólice em português claro, comparar o que o mercado oferece e estar do seu lado quando você precisar acionar a cobertura.</p>
+        <div style="display:grid;gap:12px">
+          <sc-for list="{{ diferenciaisCurtos }}" as="d" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:20px minmax(0,1fr);gap:14px;align-items:start">
+              <span style="width:20px;height:4px;background:#FF0000;margin-top:11px"></span>
+              <span style="font-size:17px;line-height:1.5;color:#12100F">{{ d }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <a href="#sobre" style="justify-self:start;font-size:16px;font-weight:700;color:#C1000B;display:flex;align-items:center;gap:8px">Conhecer a Segbom
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C1000B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1280px;margin:0 auto;padding:88px 32px;display:grid;gap:44px">
+    <div style="display:grid;gap:16px;max-width:56ch">
+      <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8A8481;font-weight:600">Como funciona</span>
+      <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,3vw,42px);line-height:1.03;letter-spacing:-.03em;margin:0;text-wrap:balance">Quatro etapas, nenhuma surpresa</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0">
+      <sc-for list="{{ etapas }}" as="e" hint-placeholder-count="4">
+        <div style="display:grid;gap:16px;padding:32px 28px 32px 0;border-top:5px solid #FF0000;align-content:start">
+          <span style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#FF0000;letter-spacing:.1em">{{ e.num }}</span>
+          <span style="font-family:'Archivo Black',sans-serif;font-size:21px;letter-spacing:-.02em;line-height:1.15">{{ e.titulo }}</span>
+          <span style="font-size:16px;line-height:1.6;color:#3A3634">{{ e.texto }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="empresas" style="background:#FF0000;color:#FFFFFF">
+    <div style="max-width:1280px;margin:0 auto;padding:88px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:56px;align-items:center">
+      <div style="display:grid;gap:26px">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.75)">Para empresas</span>
+        <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,3.2vw,44px);line-height:1.02;letter-spacing:-.03em;margin:0;text-wrap:balance">Proteção para tudo o que mantém sua empresa em movimento</h2>
+        <p style="margin:0;font-size:18px;line-height:1.6;color:rgba(255,255,255,.88);max-width:46ch;text-wrap:pretty">Cada operação tem riscos próprios. Mapeamos o que precisa de cobertura — patrimônio, frota, responsabilidade civil, colaboradores e continuidade — e montamos a proteção a partir daí.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <sc-for list="{{ areasEmpresa }}" as="a" hint-placeholder-count="8">
+            <span style="padding:9px 14px;background:rgba(18,16,15,.22);border-radius:4px;font-size:14px;font-weight:600">{{ a }}</span>
+          </sc-for>
+        </div>
+        <a href="#cotacao" style="justify-self:start;background:#12100F;color:#FFFFFF;padding:17px 28px;border-radius:4px;font-size:16px;font-weight:700;transition:background .2s ease" style-hover="background:#FFFFFF;color:#12100F">Solicitar uma análise inicial</a>
+      </div>
+      <div style="position:relative;min-height:400px">
+        <div style="position:absolute;inset:0"><image-slot id="empresas-home" shape="rect" placeholder="Ambiente empresarial brasileiro — operação real, luz natural"></image-slot></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="atendimento" style="max-width:1280px;margin:0 auto;padding:88px 32px;display:grid;gap:44px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;align-items:end">
+      <div style="display:grid;gap:16px">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8A8481;font-weight:600">Já é cliente</span>
+        <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,3vw,42px);line-height:1.03;letter-spacing:-.03em;margin:0;text-wrap:balance">Encontre o canal certo em um clique</h2>
+      </div>
+      <p style="margin:0;font-size:17px;line-height:1.6;color:#3A3634;max-width:40ch;text-wrap:pretty">Renovação, alteração de apólice, segunda via ou orientação em sinistro — cada situação tem um caminho direto.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px">
+      <sc-for list="{{ atendimento }}" as="a" hint-placeholder-count="4">
+        <a href="{{ a.href }}" style="display:grid;gap:12px;padding:28px;background:#F4F2F0;color:#12100F;align-content:start;transition:background .2s ease" style-hover="background:#12100F;color:#FFFFFF">
+          <span style="font-family:'Archivo Black',sans-serif;font-size:19px;letter-spacing:-.02em;line-height:1.15">{{ a.titulo }}</span>
+          <span style="font-size:15px;line-height:1.55;color:#8A8481">{{ a.texto }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#F4F2F0">
+    <div style="max-width:1280px;margin:0 auto;padding:72px 32px;display:grid;gap:32px">
+      <div style="display:grid;gap:10px">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8A8481;font-weight:600">Seguradoras parceiras</span>
+        <span style="font-size:16px;color:#8A8481">Substituir pelos logotipos autorizados das seguradoras com que a Segbom trabalha.</span>
+      </div>
+      <div style="overflow:hidden;position:relative">
+        <div style="display:flex;gap:16px;width:max-content;animation:segbom-marquee 32s linear infinite" style-hover="animation-play-state:paused">
+          <sc-for list="{{ seguradoras }}" as="s" hint-placeholder-count="12">
+            <div style="width:190px;height:92px;background:#FFFFFF;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(18,16,15,.1);font-size:14px;font-weight:600;color:#8A8481;flex:0 0 auto">{{ s }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="conteudos" style="max-width:1280px;margin:0 auto;padding:88px 32px;display:grid;gap:44px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;align-items:end">
+      <div style="display:grid;gap:16px">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8A8481;font-weight:600">Conteúdos</span>
+        <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,3vw,42px);line-height:1.03;letter-spacing:-.03em;margin:0">Para decidir sabendo</h2>
+      </div>
+      <a href="#conteudos" style="justify-self:start;font-size:16px;font-weight:700;color:#C1000B">Ver todos os artigos →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
+      <sc-for list="{{ artigos }}" as="a" hint-placeholder-count="3">
+        <a href="#conteudos" style="display:grid;gap:0;color:#12100F;background:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(18,16,15,.1);align-content:start;transition:box-shadow .22s ease" style-hover="box-shadow:inset 0 0 0 1px rgba(18,16,15,.1),0 16px 36px rgba(18,16,15,.1)">
+          <div style="position:relative;height:186px"><image-slot id="{{ a.slot }}" shape="rect" placeholder="Imagem do artigo"></image-slot></div>
+          <span style="display:grid;gap:12px;padding:26px">
+            <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#FF0000">{{ a.categoria }}</span>
+            <span style="font-family:'Archivo Black',sans-serif;font-size:20px;letter-spacing:-.02em;line-height:1.2">{{ a.titulo }}</span>
+            <span style="font-size:15px;line-height:1.6;color:#3A3634">{{ a.resumo }}</span>
+            <span style="font-size:13px;color:#8A8481">{{ a.leitura }}</span>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+    <p style="margin:0;font-size:14px;color:#8A8481">Conteúdo de exemplo — substituir pelos três artigos mais recentes publicados.</p>
+  </section>
+
+  <section id="faq" style="background:#12100F;color:#FFFFFF">
+    <div style="max-width:1280px;margin:0 auto;padding:88px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:56px;align-items:start">
+      <div style="display:grid;gap:20px;align-content:start">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#FF3B30;font-weight:600">Perguntas frequentes</span>
+        <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(28px,3vw,42px);line-height:1.03;letter-spacing:-.03em;margin:0;text-wrap:balance">Dúvidas que aparecem antes de contratar</h2>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.66);max-width:34ch;text-wrap:pretty">Se a sua pergunta não estiver aqui, é só chamar — respondemos sem enrolação.</p>
+        <a href="#faq" style="justify-self:start;color:#FFFFFF;font-size:16px;font-weight:700;border-bottom:2px solid #FF0000;padding-bottom:3px">Ver todas as perguntas</a>
+      </div>
+      <div style="display:grid">
+        <sc-for list="{{ faq }}" as="f" hint-placeholder-count="5">
+          <details style="border-top:1px solid rgba(255,255,255,.16)">
+            <summary style="display:grid;grid-template-columns:minmax(0,1fr) 22px;gap:20px;align-items:center;padding:22px 0;font-size:18px;font-weight:600;line-height:1.4">
+              {{ f.p }}
+              <span data-plus="1" style="display:grid;place-items:center;transition:transform .22s ease">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+              </span>
+            </summary>
+            <p style="margin:0;padding:0 42px 24px 0;font-size:16px;line-height:1.65;color:rgba(255,255,255,.68);text-wrap:pretty">{{ f.r }}</p>
+          </details>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="cotacao" style="max-width:1280px;margin:0 auto;padding:88px 32px">
+    <div style="background:#F4F2F0;padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:center">
+      <div style="display:grid;gap:22px">
+        <h2 style="font-family:'Archivo Black',sans-serif;font-size:clamp(30px,3.4vw,48px);line-height:1.02;letter-spacing:-.035em;margin:0;text-wrap:balance">Vamos conversar sobre o que você deseja proteger?</h2>
+        <p style="margin:0;font-size:18px;line-height:1.6;color:#3A3634;max-width:42ch;text-wrap:pretty">Conte o essencial. Um corretor retorna no canal e horário que você escolher, com opções comparadas.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#cotacao" style="background:#FF0000;color:#FFFFFF;padding:17px 28px;border-radius:4px;font-size:16px;font-weight:700;transition:background .2s ease" style-hover="background:#C1000B">Solicitar cotação</a>
+          <a href="#contato" style="border:2px solid #12100F;color:#12100F;padding:15px 26px;border-radius:4px;font-size:16px;font-weight:700;display:flex;align-items:center;gap:10px;transition:background .2s ease" style-hover="background:#12100F;color:#FFFFFF">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"></path></svg>
+            Falar pelo WhatsApp
+          </a>
+        </div>
+        <span style="font-size:14px;color:#8A8481">Sem documentos e sem CPF nesta etapa — só o necessário para entender seu caso.</span>
+      </div>
+      <div style="background:#FFFFFF;padding:32px;display:grid;gap:18px;box-shadow:0 20px 50px rgba(18,16,15,.1)">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ ramos }}" as="r" hint-placeholder-count="5">
+            <span onClick="{{ r.onClick }}" style="{{ r.estilo }}">{{ r.nome }}</span>
+          </sc-for>
+        </div>
+        <div style="height:4px;background:#F4F2F0"><div style="height:4px;width:33%;background:#FF0000"></div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+          <sc-for list="{{ campos }}" as="c" hint-placeholder-count="6">
+            <label style="display:grid;gap:6px">
+              <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#8A8481">{{ c }}</span>
+              <span style="height:46px;background:#F4F2F0;box-shadow:inset 0 -2px 0 rgba(18,16,15,.14);border-radius:3px;transition:box-shadow .2s ease" style-hover="box-shadow:inset 0 -2px 0 #FF0000"></span>
+            </label>
+          </sc-for>
+        </div>
+        <label style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;padding-top:4px">
+          <span style="width:22px;height:22px;background:#FFFFFF;box-shadow:inset 0 0 0 2px rgba(18,16,15,.25);border-radius:3px"></span>
+          <span style="font-size:13px;line-height:1.5;color:#8A8481">Autorizo a Segbom a utilizar os dados informados para o atendimento desta solicitação.</span>
+        </label>
+        <span style="background:#12100F;color:#FFFFFF;padding:16px;border-radius:4px;font-size:16px;font-weight:700;text-align:center;cursor:pointer;transition:background .2s ease" style-hover="background:#FF0000">Enviar solicitação de cotação</span>
+        <span style="font-size:13px;color:#8A8481;text-align:center">Etapa 1 de 3 — campos mudam conforme o seguro escolhido</span>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contato" style="background:#12100F;color:#FFFFFF">
+    <div style="max-width:1280px;margin:0 auto;padding:72px 32px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:44px">
+      <div style="display:grid;gap:20px;align-content:start">
+        <img src="assets/segbom-logo-negativa.png" alt="Segbom" style="height:56px;width:auto;justify-self:start">
+        <p style="margin:0;font-size:15px;line-height:1.6;color:rgba(255,255,255,.62);max-width:30ch">Corretora de seguros em geral. Orientação, comparação e acompanhamento — do primeiro contato ao sinistro.</p>
+        <div style="display:flex;gap:10px">
+          <sc-for list="{{ redes }}" as="r" hint-placeholder-count="3">
+            <a href="#contato" style="width:38px;height:38px;display:grid;place-items:center;background:rgba(255,255,255,.08);border-radius:4px;font-size:12px;font-weight:700;color:#FFFFFF" style-hover="background:#FF0000">{{ r }}</a>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#FF3B30;font-weight:700">Seguros</span>
+        <sc-for list="{{ produtos }}" as="p" hint-placeholder-count="6">
+          <a href="{{ p.href }}" style="font-size:15px;color:rgba(255,255,255,.72)" style-hover="color:#FFFFFF">{{ p.nome }}</a>
+        </sc-for>
+      </div>
+      <div style="display:grid;gap:12px;align-content:start">
+        <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#FF3B30;font-weight:700">Atendimento</span>
+        <sc-for list="{{ linksAtendimento }}" as="l" hint-placeholder-count="5">
+          <a href="#atendimento" style="font-size:15px;color:rgba(255,255,255,.72)" style-hover="color:#FFFFFF">{{ l }}</a>
+        </sc-for>
+      </div>
+      <div style="display:grid;gap:14px;align-content:start">
+        <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#FF3B30;font-weight:700">Contato</span>
+        <div style="display:grid;gap:3px"><span style="font-size:12px;color:#8A8481">Telefone</span><span style="font-size:17px;font-weight:700">(00) 0000-0000</span></div>
+        <div style="display:grid;gap:3px"><span style="font-size:12px;color:#8A8481">WhatsApp</span><span style="font-size:17px;font-weight:700">(00) 00000-0000</span></div>
+        <div style="display:grid;gap:3px"><span style="font-size:12px;color:#8A8481">E-mail</span><span style="font-size:15px;font-weight:600">contato@segbom.com.br</span></div>
+        <div style="display:grid;gap:3px"><span style="font-size:12px;color:#8A8481">Horário</span><span style="font-size:15px;line-height:1.5;color:rgba(255,255,255,.72)">Segunda a sexta, 9h às 18h</span></div>
+      </div>
+    </div>
+    <div style="max-width:1280px;margin:0 auto;padding:24px 32px 48px">
+      <div style="border-top:1px solid rgba(255,255,255,.14);padding-top:24px;display:grid;gap:16px">
+        <p style="margin:0;font-size:13px;line-height:1.6;color:#8A8481;max-width:100ch;text-wrap:pretty">A Segbom atua como corretora de seguros. As informações deste site são de caráter informativo e não substituem as condições gerais da apólice. Coberturas, assistências, franquias e carências variam conforme a seguradora, o produto e a análise de aceitação do risco.</p>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+          <span style="font-size:13px;color:#8A8481">© 2026 Segbom Corretora de Seguros · CNPJ 00.000.000/0000-00</span>
+          <a href="#contato" style="font-size:13px;color:rgba(255,255,255,.7)">Política de privacidade</a>
+          <a href="#contato" style="font-size:13px;color:rgba(255,255,255,.7)">Termos de uso</a>
+          <a href="#contato" style="font-size:13px;color:rgba(255,255,255,.7)">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<a href="#contato" style="position:fixed;right:22px;bottom:22px;z-index:70;width:58px;height:58px;border-radius:50%;background:#0F7A4F;display:grid;place-items:center;box-shadow:0 10px 30px rgba(15,122,79,.4);transition:transform .18s ease" style-hover="transform:scale(1.06)" aria-label="Falar pelo WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"></path></svg>
+</a>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280}}">
+const ico = (d, size) => React.createElement('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: '#FF0000', strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round' },
+  d.map((p, i) => React.createElement('path', { key: i, d: p })));
+
+const PATHS = {
+  auto: ['M3 13.5l1.8-5A2 2 0 0 1 6.7 7h10.6a2 2 0 0 1 1.9 1.5l1.8 5', 'M3 13.5h18v4H3z', 'M6.5 17.5v2M17.5 17.5v2'],
+  casa: ['M3.5 10.5L12 4l8.5 6.5', 'M5.5 9.8V20h13V9.8', 'M10 20v-5h4v5'],
+  vida: ['M12 20s-7-4.4-7-9.2A3.8 3.8 0 0 1 12 8.4a3.8 3.8 0 0 1 7 2.4c0 4.8-7 9.2-7 9.2z'],
+  empresa: ['M4 20V6.5L13 4v16', 'M13 10h7v10', 'M2.5 20h19', 'M7.5 9v0M7.5 13v0M16.5 14v0'],
+  saude: ['M12 4.5v15M4.5 12h15'],
+  outros: ['M12 3.5l7 2.5v6c0 4.2-2.9 7-7 8.5-4.1-1.5-7-4.3-7-8.5V6z'],
+};
+
+class Component extends DCLogic {
+  state = { mega: false, ramo: 'Auto' };
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const h = this.headerRef;
+      if (!h) return;
+      const s = window.scrollY > 8;
+      h.style.boxShadow = s ? '0 6px 24px rgba(18,16,15,.12)' : '0 1px 0 rgba(18,16,15,.1)';
+      h.style.padding = s ? '0' : '';
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+
+  renderVals() {
+    const produtos = [
+      { nome: 'Seguro Auto', href: '#seguros', mini: 'Perfil, uso do veículo e assistência 24h', resumo: 'Proteção para o veículo, danos a terceiros e assistência — ajustada ao seu perfil e ao uso do carro.', cta: 'Quero proteger meu veículo', k: 'auto' },
+      { nome: 'Seguro Residencial', href: '#seguros', mini: 'Imóvel, conteúdo e assistências do dia a dia', resumo: 'Cobertura para o imóvel e os bens, com assistências que resolvem o cotidiano da casa.', cta: 'Quero proteger minha casa', k: 'casa' },
+      { nome: 'Seguro de Vida', href: '#seguros', mini: 'Individual, familiar ou coletivo', resumo: 'Proteção financeira para quem depende de você, com coberturas também em vida.', cta: 'Quero proteger minha família', k: 'vida' },
+      { nome: 'Seguro Empresarial', href: '#empresas', mini: 'Patrimônio, operação e continuidade', resumo: 'Análise dos riscos do seu negócio: instalações, estoque, frota, RC e interrupção de atividades.', cta: 'Quero proteger minha empresa', k: 'empresa' },
+      { nome: 'Planos de Saúde', href: '#seguros', mini: 'Rede, abrangência e coparticipação', resumo: 'Comparação de rede credenciada, carências e acomodação para pessoas, famílias e empresas.', cta: 'Comparar opções de saúde', k: 'saude' },
+      { nome: 'Outros Seguros', href: '#seguros', mini: 'Viagem, equipamentos, garantia e mais', resumo: 'Precisa proteger algo específico? Avaliamos a demanda e buscamos o produto adequado.', cta: 'Falar com um consultor', k: 'outros' },
+    ].map(p => ({ ...p, icone: ico(PATHS[p.k], 19), iconeGrande: ico(PATHS[p.k], 26) }));
+
+    const ramos = ['Auto', 'Residencial', 'Vida', 'Empresarial', 'Saúde'].map(nome => ({
+      nome,
+      onClick: () => this.setState({ ramo: nome }),
+      estilo: nome === this.state.ramo
+        ? 'padding:9px 15px;border-radius:4px;font-size:14px;font-weight:700;background:#FF0000;color:#FFFFFF;cursor:pointer'
+        : 'padding:9px 15px;border-radius:4px;font-size:14px;font-weight:600;background:#F4F2F0;color:#3A3634;cursor:pointer',
+    }));
+
+    const camposPor = {
+      Auto: ['Nome', 'Telefone', 'E-mail', 'Cidade', 'Marca e modelo', 'Ano', 'Uso do veículo', 'Melhor horário'],
+      Residencial: ['Nome', 'Telefone', 'E-mail', 'Cidade', 'Tipo de imóvel', 'Próprio ou alugado', 'Uso habitual', 'Melhor horário'],
+      Vida: ['Nome', 'Telefone', 'E-mail', 'Cidade', 'Tipo de contratação', 'Nº de pessoas', 'Faixas etárias', 'Melhor horário'],
+      Empresarial: ['Nome', 'Telefone', 'E-mail corporativo', 'Empresa', 'Cidade', 'Segmento', 'Nº de funcionários', 'Proteção desejada'],
+      'Saúde': ['Nome', 'Telefone', 'E-mail', 'Cidade', 'Tipo de contratação', 'Nº de pessoas', 'Faixas etárias', 'Melhor horário'],
+    };
+
+    return {
+      produtos, ramos,
+      campos: camposPor[this.state.ramo] || camposPor.Auto,
+      megaAberto: this.state.mega,
+      abrirMega: () => this.setState({ mega: true }),
+      fecharMega: () => this.setState({ mega: false }),
+      headerRef: el => { this.headerRef = el; },
+      confianca: ['Atendimento humano', 'Proteção personalizada', 'Agilidade na cotação', 'Suporte próximo no sinistro', 'Soluções para pessoas e empresas'],
+      diferenciaisCurtos: [
+        'Comparamos seguradoras antes de indicar uma proposta.',
+        'Explicamos franquia, carência e exclusão em linguagem direta.',
+        'Você fala com uma pessoa — não com uma fila de atendimento.',
+        'Acompanhamos renovação, alteração e abertura de sinistro.',
+      ],
+      etapas: [
+        { num: '01', titulo: 'Solicitação', texto: 'Você conta o que quer proteger. Poucos campos, nada de documento nesta etapa.' },
+        { num: '02', titulo: 'Entendimento', texto: 'Um corretor conversa com você para entender perfil, rotina e prioridades.' },
+        { num: '03', titulo: 'Comparação', texto: 'Apresentamos opções lado a lado, com coberturas e diferenças explicadas.' },
+        { num: '04', titulo: 'Contratação e acompanhamento', texto: 'Fechamos o que faz sentido e seguimos com você na vigência e no sinistro.' },
+      ],
+      areasEmpresa: ['Imóveis e instalações', 'Máquinas e equipamentos', 'Estoques', 'Danos elétricos', 'Responsabilidade civil', 'Interrupção de atividades', 'Frota', 'Colaboradores'],
+      atendimento: [
+        { titulo: 'Sou cliente', texto: 'Segunda via, dados da apólice e canais diretos.', href: '#atendimento' },
+        { titulo: 'Renovação', texto: 'Revisamos coberturas e valores antes do vencimento.', href: '#atendimento' },
+        { titulo: 'Alterações na apólice', texto: 'Endereço, veículo, beneficiários e capitais.', href: '#atendimento' },
+        { titulo: 'Orientação em sinistros', texto: 'O que fazer nas primeiras horas e para quem ligar.', href: '#atendimento' },
+      ],
+      seguradoras: Array.from({ length: 12 }, (_, i) => 'Logotipo ' + ((i % 6) + 1)),
+      artigos: [
+        { categoria: 'Seguro Auto', titulo: 'Franquia: quando vale acionar o seguro', resumo: 'Como comparar o valor do conserto com a franquia antes de abrir um sinistro.', leitura: '4 min de leitura', slot: 'art-1' },
+        { categoria: 'Residencial', titulo: 'O que a cobertura de danos elétricos cobre', resumo: 'Aparelhos queimados por oscilação de energia: o que costuma entrar e o que fica de fora.', leitura: '5 min de leitura', slot: 'art-2' },
+        { categoria: 'Empresarial', titulo: 'Cinco riscos que a maioria das PMEs deixa descoberto', resumo: 'Do estoque à responsabilidade civil, os pontos que aparecem nas análises do dia a dia.', leitura: '6 min de leitura', slot: 'art-3' },
+      ],
+      faq: [
+        { p: 'Corretora custa mais caro do que contratar direto?', r: 'Não. A remuneração da corretora já está prevista no prêmio do seguro. A diferença é que você recebe comparação entre seguradoras e acompanhamento durante a vigência.' },
+        { p: 'Quanto tempo leva para receber uma cotação?', r: 'Depende do produto e da seguradora. Auto e residencial costumam sair no mesmo dia; empresarial e saúde exigem análise mais detalhada.' },
+        { p: 'Preciso enviar documentos no primeiro contato?', r: 'Não. Começamos com dados básicos de contato e informações do que será protegido. Documentos entram apenas na etapa de emissão.' },
+        { p: 'A Segbom ajuda em caso de sinistro?', r: 'Sim. Orientamos sobre os primeiros passos, os documentos necessários e acompanhamos o processo junto à seguradora.' },
+        { p: 'Vocês atendem empresas de qualquer porte?', r: 'Atendemos de autônomos e pequenos negócios a operações maiores. A análise de risco é feita caso a caso.' },
+      ],
+      linksAtendimento: ['Sou cliente', 'Renovação', 'Alterações na apólice', 'Orientação em sinistros', 'Perguntas frequentes'],
+      redes: ['IG', 'FB', 'IN'],
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,17 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
+import { navigation } from "@/data/site";
+import { MobileNav } from "@/components/mobile-nav";
 
-const navigation = [
-  ["A Segbom", "/sobre"],
-  ["Seguros", "/seguros"],
-  ["Para empresas", "/seguros/empresarial"],
-  ["Atendimento", "/atendimento"],
-  ["Conteúdos", "/conteudos"],
-] as const;
-
-export function Logo() {
+export function Logo({ variant = "default" }: { variant?: "default" | "negative" }) {
+  const src = variant === "negative" ? "/logo-segbom-negativa.png" : "/logo-segbom.png";
   return (
     <Link className="logo" href="/" aria-label="Segbom — página inicial">
-      SEGBOM<span>.</span>
+      <Image src={src} alt="Segbom Corretora de Seguros" width={505} height={582} priority />
     </Link>
   );
 }
@@ -21,16 +17,17 @@ export function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Logo />
-        <nav aria-label="Navegação principal">
+        <nav className="site-nav" aria-label="Navegação principal">
           {navigation.map(([label, href]) => (
             <Link key={href} href={href}>
               {label}
             </Link>
           ))}
         </nav>
-        <Link className="button button-small" href="/cotacao">
+        <Link className="button button-small header-cta" href="/cotacao">
           Solicitar cotação
         </Link>
+        <MobileNav />
       </div>
     </header>
   );
@@ -41,7 +38,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <Logo />
+          <Logo variant="negative" />
           <p>
             Segurança sob medida, atendimento humano e orientação clara para
             proteger o que importa.

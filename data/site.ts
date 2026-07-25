@@ -1,3 +1,12 @@
+export const navigation = [
+  ["Início", "/"],
+  ["A Segbom", "/sobre"],
+  ["Seguros", "/seguros"],
+  ["Para empresas", "/seguros/empresarial"],
+  ["Atendimento", "/atendimento"],
+  ["Conteúdos", "/conteudos"],
+] as const;
+
 export const products = [
   {
     slug: "auto",
